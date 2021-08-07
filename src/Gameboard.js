@@ -1,6 +1,7 @@
+import DOMHandler from "./DOMHandler.js";
 import Ship from "./Ship.js";
 
-const Gameboard = () =>
+const Gameboard = (domBoard) =>
 {
 	let board =
 	[
@@ -19,7 +20,7 @@ const Gameboard = () =>
 	const missedShots = [];
 	const ships = [];
 
-	const placeShip = (xCoord, yCoord, length) =>
+	const placeShip = (xCoord, yCoord, length, visible) =>
 	{
 		if ((xCoord + length) > 10) return "Out of range";
 		const ship = Ship(length);
@@ -29,21 +30,29 @@ const Gameboard = () =>
 		for (let i = xCoord; i < length + xCoord; i++)
 		{
 			setGrid(i, yCoord, [ship, j]);
+			DOMHandler.placeShip(i, yCoord, domBoard, visible);
 			j++;
 		}
 	};
 
 	const receiveAttack = (x, y) =>
 	{
-		if (typeof(getGrid(x, y)) !== "number") return getGrid(x, y)[0].hit(getGrid(x, y)[1]);
+		if (typeof(getGrid(x, y)) !== "number") return hitShot(x, y);
 		else if (getGrid(x, y) === 1) return "You already tried to hit this one";
 		else return missShot(x, y);
+	};
+
+	const hitShot = (x, y) =>
+	{
+		getGrid(x, y)[0].hit(getGrid(x, y)[1]);
+		DOMHandler.hitShot(x, y, domBoard);
 	};
 
 	const missShot = (x, y) =>
 	{
 		missedShots.push([x, y]);
 		setGrid(x, y, 1);
+		DOMHandler.missShot(x, y, domBoard);
 		return "Miss!";
 	};
 

@@ -1,9 +1,11 @@
-import Gameboard from "./Gameboard";
+import Gameboard from "./Gameboard.js";
+import Game from "./Game.js";
 
-const Player = () =>
+const Player = (board) =>
 {
-	const gameboard = Gameboard();
+	let obj;
 
+	const gameboard = Gameboard(document.querySelector(`#${board}`));
 	const randomPlay = (player, getRandomCoord) =>	
 	{
 		const playerGameboard = player.gameboard;
@@ -20,7 +22,11 @@ const Player = () =>
 
 	const getRandomCoord = () => Math.floor(Math.random() * 10);
 
-	return { gameboard, randomPlay, getRandomCoord };
+	obj = { gameboard, randomPlay, getRandomCoord };
+
+	Game.players.push(obj);
+	
+	return obj;
 };
 
 export default Player;
