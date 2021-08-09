@@ -30,7 +30,7 @@ const Gameboard = (domBoard) =>
 		for (let i = xCoord; i < length + xCoord; i++)
 		{
 			setGrid(i, yCoord, [ship, j]);
-			DOMHandler.placeShip(i, yCoord, domBoard, visible);
+			if (domBoard) DOMHandler.placeShip(i, yCoord, domBoard, visible);
 			j++;
 		}
 	};
@@ -45,14 +45,14 @@ const Gameboard = (domBoard) =>
 	const hitShot = (x, y) =>
 	{
 		getGrid(x, y)[0].hit(getGrid(x, y)[1]);
-		DOMHandler.hitShot(x, y, domBoard);
+		if (domBoard) DOMHandler.hitShot(x, y, domBoard);
 	};
 
 	const missShot = (x, y) =>
 	{
 		missedShots.push([x, y]);
 		setGrid(x, y, 1);
-		DOMHandler.missShot(x, y, domBoard);
+		if (domBoard) DOMHandler.missShot(x, y, domBoard);
 		return "Miss!";
 	};
 
@@ -68,7 +68,7 @@ const Gameboard = (domBoard) =>
 	const setGrid = (x, y, value) => board[y][x] = value;
 	const getGrid = (x, y) => board[y][x];
 
-	return { placeShip, board, getGrid, receiveAttack, missedShots, didShipsSink };
+	return { placeShip, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard };
 };
 
 export default Gameboard;
