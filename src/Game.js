@@ -27,10 +27,7 @@ const Game = (() =>
 		computer.randomPlay(players.find(player => player.name === "Player"), computer.getRandomCoord);
 	};
 
-	const playerTurn = () =>
-	{
-		switchTurnsDOM();
-	};
+	const playerTurn = () => switchTurnsDOM();
 
 	return { players, didPlayersSink, clearPlayers, computerTurn, playerTurn };
 })();
