@@ -1,3 +1,5 @@
+import Game from "./Game";
+
 const DOMHandler = (() =>
 {
 	const createBoard = (domBoard, board) =>
@@ -11,7 +13,11 @@ const DOMHandler = (() =>
 				gridElement.dataset.coords = `(${j}, ${i})`;
 				domBoard.appendChild(gridElement);
 
-				gridElement.addEventListener("click", () => board.receiveAttack(j, i));
+				gridElement.addEventListener("click", () => 
+				{
+					board.receiveAttack(j, i);
+					Game.computerTurn();
+				});
 			}
 		}
 	};
