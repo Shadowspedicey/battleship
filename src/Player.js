@@ -21,8 +21,6 @@ const Player = (board, name) =>
 
 			if (playerGameboard.getGrid(x, y) === 1) return play();
 
-			console.log(`(${x}, ${y})`);
-
 			const attack = playerGameboard.receiveAttack(x, y);
 			return Promise.resolve(attack);
 		};

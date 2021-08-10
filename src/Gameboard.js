@@ -26,6 +26,7 @@ const Gameboard = (domBoard) =>
 		const ship = Ship(length);
 		ships.push(ship);
 
+		// j is ship parts
 		let j = 0;
 		if (!vertical)
 		{
@@ -61,7 +62,9 @@ const Gameboard = (domBoard) =>
 	{
 		if (!vertical)
 		{
+			// This checks if ships is out of bounds
 			if ((xCoord + length) > 10) return false;
+			// This checks for overlapping
 			for (let i = xCoord; i < length; i++)
 			{
 				if (getGrid(i, yCoord) !== 0) return false;
@@ -110,8 +113,8 @@ const Gameboard = (domBoard) =>
 		return true;
 	};
 
-	const setGrid = (x, y, value) => board[y][x] = value;
 	const getGrid = (x, y) => board[y][x];
+	const setGrid = (x, y, value) => board[y][x] = value;
 
 	return { placeShip, placeShipRandomly, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard };
 };
