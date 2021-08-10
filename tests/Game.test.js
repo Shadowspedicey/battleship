@@ -31,7 +31,9 @@ test("Knows when 1 player lost", () =>
 
 test("Can play rounds", () => 
 {
-	Player(null, "Player");
-	Player(null, "Computer");
+	const player = Player(null, "Player");
+	player.gameboard.placeShip(0, 0, 1);
+	const computer = Player(null, "Computer");
+	computer.gameboard.placeShip(0, 0, 1);
 	expect(Game.playRound("ass")).toBe(true);
 });
