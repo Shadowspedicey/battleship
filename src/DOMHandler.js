@@ -2,8 +2,11 @@ import Game from "./Game";
 
 const DOMHandler = (() =>
 {
-	const createBoard = (domBoard, board) =>
+	const lengths = [5, 4, 3, 3, 2];
+
+	const createBoard = (domBoard, board, player) =>
 	{
+		let l = 0;
 		for (let i = 0; i < 10; i++)
 		{
 			for (let j = 0; j < 10; j++)
@@ -13,11 +16,50 @@ const DOMHandler = (() =>
 				gridElement.dataset.coords = `(${j}, ${i})`;
 				domBoard.appendChild(gridElement);
 
-				gridElement.addEventListener("click", () => 
+				if (!player)
 				{
-					board.receiveAttack(j, i);
-					Game.playRound();
-				}, {once: true});
+					gridElement.addEventListener("click", () => 
+					{
+						board.receiveAttack(j, i);
+						Game.playRound();
+					}, {once: true});
+				} 
+				
+				else
+				{
+					gridElement.addEventListener("mouseover", () =>
+					{
+						for (let k = j; k < lengths[l] + j; k++)
+						{
+							const element = gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`);
+							if (!element) return;
+							element.classList.add("hovered");
+						}
+					});
+
+					gridElement.addEventListener("mouseout", () =>
+					{
+						for (let k = j; k <= lengths[l] + j; k++)
+						{
+							const element = gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`);
+							if (!element) return;
+							element.classList.remove("hovered");
+						}
+					});
+
+					gridElement.addEventListener("click", () =>
+					{
+						if (board.placeShip(j, i, lengths[l], false, true) === true)
+						{
+							board.placeShip(j, i, lengths[l], false, true);
+							for (let k = j; k <= lengths[l] + j; k++)
+							{
+								gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`).classList.remove("hovered");
+							}
+							l++;
+						}
+					});
+				}
 			}
 		}
 	};

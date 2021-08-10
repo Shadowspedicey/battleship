@@ -44,6 +44,7 @@ const Gameboard = (domBoard) =>
 				j++;
 			}
 		}
+		return true;
 	};
 
 	const placeShipRandomly = (length, vertical, visibility) => 
