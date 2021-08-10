@@ -6,66 +6,73 @@ const DOMHandler = (() =>
 
 	const createBoard = (domBoard, board, player) =>
 	{
-		let l = 0;
-		// i is the y axis
-		for (let i = 0; i < 10; i++)
+		return new Promise(resolve =>
 		{
-			// j is the x axis
-			for (let j = 0; j < 10; j++)
+			let l = 0;
+			// i is the y axis
+			for (let i = 0; i < 10; i++)
 			{
-				const gridElement = document.createElement("div");
-				gridElement.classList.add("board-element");
-				gridElement.dataset.coords = `(${j}, ${i})`;
-				domBoard.appendChild(gridElement);
-
-				// Check if have to place first
-				if (!player)
+				// j is the x axis
+				for (let j = 0; j < 10; j++)
 				{
-					gridElement.addEventListener("click", () => 
+					const gridElement = document.createElement("div");
+					gridElement.classList.add("board-element");
+					gridElement.dataset.coords = `(${j}, ${i})`;
+					domBoard.appendChild(gridElement);
+	
+					// Check if have to place first
+					if (!player)
 					{
-						board.receiveAttack(j, i);
-						Game.playRound();
-					}, {once: true});
-				} 
-				
-				else
-				{
-					gridElement.addEventListener("mouseover", () =>
-					{
-						for (let k = j; k < lengths[l] + j; k++)
+						gridElement.addEventListener("click", () => 
 						{
-							const element = gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`);
-							if (!element) return;
-							element.classList.add("hovered");
-						}
-					});
-
-					gridElement.addEventListener("mouseout", () =>
+							board.receiveAttack(j, i);
+							Game.playRound();
+						}, {once: true});
+					} 
+					
+					else
 					{
-						for (let k = j; k <= lengths[l] + j; k++)
+						gridElement.addEventListener("mouseover", () =>
 						{
-							const element = gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`);
-							if (!element) return;
-							element.classList.remove("hovered");
-						}
-					});
-
-					gridElement.addEventListener("click", () =>
-					{
-						if (board.placeShip(j, i, lengths[l], false, true) === true)
+							for (let k = j; k < lengths[l] + j; k++)
+							{
+								const element = gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`);
+								if (!element) return;
+								element.classList.add("hovered");
+							}
+						});
+	
+						gridElement.addEventListener("mouseout", () =>
 						{
-							board.placeShip(j, i, lengths[l], false, true);
 							for (let k = j; k <= lengths[l] + j; k++)
 							{
-								gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`).classList.remove("hovered");
+								const element = gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`);
+								if (!element) return;
+								element.classList.remove("hovered");
 							}
-							l++;
-							if (l === 5) domBoard.style.pointerEvents = "none";
-						}
-					});
+						});
+	
+						gridElement.addEventListener("click", () =>
+						{
+							if (board.placeShip(j, i, lengths[l], false, true) === true)
+							{
+								board.placeShip(j, i, lengths[l], false, true);
+								for (let k = j; k <= lengths[l] + j; k++)
+								{
+									gridElement.parentElement.querySelector(`div[data-coords="(${k}, ${i})"]`).classList.remove("hovered");
+								}
+								l++;
+								if (l === 5)
+								{
+									domBoard.style.pointerEvents = "none";
+									resolve();
+								}
+							}
+						});
+					}
 				}
-			}
-		}
+			}	
+		});
 	};
 
 	const placeShip = (x, y, domBoard, visible = false) =>
