@@ -17,7 +17,7 @@ const DOMHandler = (() =>
 				{
 					board.receiveAttack(j, i);
 					Game.playRound();
-				});
+				}, {once: true});
 			}
 		}
 	};
