@@ -3,6 +3,7 @@ const Game = (() =>
 	let players = [];
 
 	let _playerTurn = true;
+	let gameOver = false;
 
 	const didPlayersSink = () =>
 	{
@@ -33,13 +34,18 @@ const Game = (() =>
 	
 	const isGameOver = (alert) =>
 	{
-		if (didPlayersSink()) alert("s");
+		if (didPlayersSink()) 
+		{
+			alert("s");
+			gameOver = true;
+		}
 	};
 
 	const changeTurns = () => _playerTurn = !_playerTurn;
 	
 	const playRound = (test) =>
 	{
+		if (gameOver) return;
 		_playerTurn ? playerTurn(test) : computerTurn();
 		changeTurns();
 		isGameOver(alert);
