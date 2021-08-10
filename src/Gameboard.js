@@ -65,7 +65,7 @@ const Gameboard = (domBoard) =>
 			// This checks if ships is out of bounds
 			if ((xCoord + length) > 10) return false;
 			// This checks for overlapping
-			for (let i = xCoord; i < length; i++)
+			for (let i = xCoord; i < length + xCoord; i++)
 			{
 				if (getGrid(i, yCoord) !== 0) return false;
 			}
@@ -73,7 +73,7 @@ const Gameboard = (domBoard) =>
 		} else
 		{
 			if ((yCoord + length) > 10) return false;
-			for (let i = yCoord; i < length; i++)
+			for (let i = yCoord; i < length + yCoord; i++)
 			{
 				if (getGrid(xCoord, i) !== 0) return false;
 			}
