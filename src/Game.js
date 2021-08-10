@@ -27,7 +27,11 @@ const Game = (() =>
 	{
 		const computer = players.find(player => player.name === "Computer");
 		computer.randomPlay(players.find(player => player.name === "Player"), computer.getRandomCoord)
-			.then(() => switchTurnsDOM());
+			.then(() => 
+			{
+				switchTurnsDOM();
+				isGameOver(alert);
+			});
 	};
 	
 	const playerTurn = (test) => switchTurnsDOM(test);
@@ -36,7 +40,7 @@ const Game = (() =>
 	{
 		if (didPlayersSink()) 
 		{
-			alert("s");
+			setTimeout(() => alert("s"), 0);
 			gameOver = true;
 		}
 	};
