@@ -28,3 +28,10 @@ test("Knows when 1 player lost", () =>
 	expect(Game.didPlayersSink()).toBe(player);
 	expect(Game.didPlayersSink().name).toBe("Player");
 });
+
+test("Can play rounds", () => 
+{
+	Player(null, "Player");
+	Player(null, "Computer");
+	expect(Game.playRound("ass")).toBe(true);
+});

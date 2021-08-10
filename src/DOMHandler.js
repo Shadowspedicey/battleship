@@ -16,7 +16,7 @@ const DOMHandler = (() =>
 				gridElement.addEventListener("click", () => 
 				{
 					board.receiveAttack(j, i);
-					Game.computerTurn();
+					Game.playRound();
 				});
 			}
 		}

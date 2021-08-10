@@ -1,5 +1,6 @@
 import Gameboard from "./Gameboard.js";
 import Game from "./Game.js";
+import "regenerator-runtime/runtime";
 
 const Player = (board, name) =>
 {
@@ -7,10 +8,10 @@ const Player = (board, name) =>
 
 	const gameboard = Gameboard(document.querySelector(`#${board}`));
 
-	const randomPlay = (player, getRandomCoord, playerTurn) =>	
+	const randomPlay = (player, getRandomCoord) =>	
 	{
 		const playerGameboard = player.gameboard;
-		const play = async (playerTurn) =>
+		const play = async () =>
 		{
 			// eslint-disable-next-line no-unused-vars
 			const temp = await new Promise(resolve => setTimeout(resolve, 500));
@@ -20,10 +21,10 @@ const Player = (board, name) =>
 
 			if (playerGameboard.getGrid(x, y) === 1) return play();
 
-			playerTurn();
-			return playerGameboard.receiveAttack(x, y);
+			const attack = playerGameboard.receiveAttack(x, y);
+			return Promise.resolve(attack);
 		};
-		return play(playerTurn);
+		return play();
 	};
 
 	const getRandomCoord = () => Math.floor(Math.random() * 10);
