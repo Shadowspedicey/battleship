@@ -17,42 +17,64 @@ const Gameboard = (domBoard) =>
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	];
 
-	const missedShots = [];
 	const ships = [];
+	const missedShots = [];
 
-	const placeShip = (xCoord, yCoord, length, visible) =>
+	const placeShip = (xCoord, yCoord, length, vertical, visible) =>
 	{
-		if (!checkRange(xCoord, yCoord, length)) return "Out of range";
+		if (!checkRange(xCoord, yCoord, length, vertical)) return "Out of range";
 		const ship = Ship(length);
 		ships.push(ship);
 
 		let j = 0;
-		for (let i = xCoord; i < length + xCoord; i++)
+		if (!vertical)
 		{
-			setGrid(i, yCoord, [ship, j]);
-			if (domBoard) DOMHandler.placeShip(i, yCoord, domBoard, visible);
-			j++;
+			for (let i = xCoord; i < length + xCoord; i++)
+			{
+				setGrid(i, yCoord, [ship, j]);
+				if (domBoard) DOMHandler.placeShip(i, yCoord, domBoard, visible);
+				j++;
+			}
+		} else
+		{
+			for (let i = yCoord; i < length + yCoord; i++)
+			{
+				setGrid(xCoord, i, [ship, j]);
+				if (domBoard) DOMHandler.placeShip(xCoord, i, domBoard, visible);
+				j++;
+			}
 		}
 	};
 
-	const placeShipRandomly = (length, visibility) => 
+	const placeShipRandomly = (length, vertical, visibility) => 
 	{
 		const foo = () =>
 		{
-			if (placeShip(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), length, visibility) === "Out of range")
+			if (placeShip(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), length, vertical, visibility) === "Out of range")
 				foo();
 		};
 		foo();
 	};
 
-	const checkRange = (xCoord, yCoord, length) =>
+	const checkRange = (xCoord, yCoord, length, vertical) =>
 	{
-		if ((xCoord + length) > 10) return false;
-		for (let i = xCoord; i < length; i++)
+		if (!vertical)
 		{
-			if (getGrid(i, yCoord) !== 0) return false;
+			if ((xCoord + length) > 10) return false;
+			for (let i = xCoord; i < length; i++)
+			{
+				if (getGrid(i, yCoord) !== 0) return false;
+			}
+			return true;
+		} else
+		{
+			if ((yCoord + length) > 10) return false;
+			for (let i = yCoord; i < length; i++)
+			{
+				if (getGrid(xCoord, i) !== 0) return false;
+			}
+			return true;
 		}
-		return true;
 	};
 
 	const receiveAttack = (x, y) =>

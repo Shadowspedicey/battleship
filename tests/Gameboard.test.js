@@ -54,3 +54,15 @@ test("Check if all ships sank", () =>
 	gameboard.receiveAttack(2, 0);
 	expect(gameboard.didShipsSink()).toBe(false);
 });
+
+test("Place ships with coords vertically", () => 
+{
+	const length = 4;
+	const x = 0;
+	const y = 0;
+	gameboard.placeShip(x, y, length, true, true);
+	for (let i = y; i < length; i++)
+	{
+		expect(typeof(gameboard.getGrid(x, i))).toBe("object");
+	}
+});
