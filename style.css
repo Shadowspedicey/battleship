@@ -25,7 +25,7 @@ html, body
 	position: relative;
 }
 
-#playerboard-container h1
+#playerboard-container > h1
 {
 	font-size: 4em;
 	font-family: monospace;
@@ -36,6 +36,19 @@ html, body
 	bottom: -2em;
 	right: 50%;
 	transform: translateX(50%);
+}
+
+.buttons-container
+{
+	width: 100%;
+
+	font-size: 1.25em;
+	font-family: monospace;
+
+	display: flex;
+	justify-content: space-evenly;
+
+	position: absolute;
 }
 
 .board
