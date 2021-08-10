@@ -37,6 +37,7 @@ const DOMHandler = (() =>
 						{
 							const toggle = document.createElement("h1");
 							toggle.textContent = "Vertical";
+							toggle.id = "toggle";
 							gridElement.parentElement.parentElement.appendChild(toggle);
 							
 							toggle.addEventListener("click", () =>
@@ -114,7 +115,7 @@ const DOMHandler = (() =>
 									}
 								}
 								l++;
-								if (l === 5) endSetUp(domBoard, resolve);
+								if (l === 5) endSetUp(domBoard, board, resolve, l);
 							}
 						});
 					}
@@ -123,11 +124,47 @@ const DOMHandler = (() =>
 		});
 	};
 
-	const endSetUp = (domBoard, resolve) =>
+	// eslint-disable-next-line no-unused-vars
+	const endSetUp = (domBoard, board, resolve, l) =>
 	{
 		domBoard.style.pointerEvents = "none";
-		domBoard.parentElement.querySelector("h1").remove();
-		resolve();
+		domBoard.parentElement.querySelector("#toggle").remove();
+		
+		(() =>
+		{
+			if (document.querySelector(".buttons-container")) 
+				return document.querySelector(".buttons-container").style = "";
+			const div = document.createElement("div");
+			div.classList.add("buttons-container");
+
+			const start = document.createElement("h1");
+			start.textContent = "Start Game";
+			start.style.cursor = "pointer";
+			div.appendChild(start);
+
+			const reset = document.createElement("h1");
+			reset.textContent = "Reset";
+			reset.style.cursor = "pointer";
+			div.appendChild(reset);
+
+			domBoard.parentElement.appendChild(div);
+
+			start.addEventListener("click", () =>
+			{
+				div.remove();
+				resolve();
+			});
+
+			reset.addEventListener("click", () =>
+			{
+				l = 0;
+				domBoard.style.pointerEvents = "initial";
+				domBoard.innerHTML = "";
+				createBoard(domBoard, board, true);
+				div.style.display = "none";
+				board.reset();
+			});
+		})();
 	};
 
 	const placeShip = (x, y, domBoard, visible = false) =>

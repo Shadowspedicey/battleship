@@ -113,10 +113,22 @@ const Gameboard = (domBoard) =>
 		return true;
 	};
 
+	const reset = () =>
+	{
+		ships.length = 0;
+		for (let y = 0; y < 10; y++)
+		{
+			for (let x = 0; x < 10; x++)
+			{
+				setGrid(x, y, 0);
+			}
+		}
+	};
+
 	const getGrid = (x, y) => board[y][x];
 	const setGrid = (x, y, value) => board[y][x] = value;
 
-	return { placeShip, placeShipRandomly, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard };
+	return { placeShip, placeShipRandomly, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard, reset };
 };
 
 export default Gameboard;
