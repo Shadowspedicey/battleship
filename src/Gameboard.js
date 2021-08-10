@@ -22,7 +22,7 @@ const Gameboard = (domBoard) =>
 
 	const placeShip = (xCoord, yCoord, length, visible) =>
 	{
-		if ((xCoord + length) > 10) return "Out of range";
+		if (!checkRange(xCoord, yCoord, length)) return "Out of range";
 		const ship = Ship(length);
 		ships.push(ship);
 
@@ -35,6 +35,26 @@ const Gameboard = (domBoard) =>
 		}
 	};
 
+	const placeShipRandomly = (length, visibility) => 
+	{
+		const foo = () =>
+		{
+			if (placeShip(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), length, visibility) === "Out of range")
+				foo();
+		};
+		foo();
+	};
+
+	const checkRange = (xCoord, yCoord, length) =>
+	{
+		if ((xCoord + length) > 10) return false;
+		for (let i = xCoord; i < length; i++)
+		{
+			if (getGrid(i, yCoord) !== 0) return false;
+		}
+		return true;
+	};
+
 	const receiveAttack = (x, y) =>
 	{
 		if (typeof(getGrid(x, y)) !== "number") return hitShot(x, y);
@@ -45,7 +65,9 @@ const Gameboard = (domBoard) =>
 	const hitShot = (x, y) =>
 	{
 		if (domBoard) DOMHandler.hitShot(x, y, domBoard);
-		return getGrid(x, y)[0].hit(getGrid(x, y)[1]);
+		const _info = getGrid(x, y)[0].hit(getGrid(x, y)[1]);
+		setGrid(x, y, 1);
+		return _info;
 	};
 
 	const missShot = (x, y) =>
@@ -68,7 +90,7 @@ const Gameboard = (domBoard) =>
 	const setGrid = (x, y, value) => board[y][x] = value;
 	const getGrid = (x, y) => board[y][x];
 
-	return { placeShip, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard };
+	return { placeShip, placeShipRandomly, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard };
 };
 
 export default Gameboard;
