@@ -7,10 +7,10 @@ const Player = (board, name) =>
 
 	const gameboard = Gameboard(document.querySelector(`#${board}`));
 
-	const randomPlay = (player, getRandomCoord) =>	
+	const randomPlay = (player, getRandomCoord, playerTurn) =>	
 	{
 		const playerGameboard = player.gameboard;
-		const play = async () =>
+		const play = async (playerTurn) =>
 		{
 			// eslint-disable-next-line no-unused-vars
 			const temp = await new Promise(resolve => setTimeout(resolve, 500));
@@ -19,11 +19,11 @@ const Player = (board, name) =>
 			const y = getRandomCoord();
 
 			if (playerGameboard.getGrid(x, y) === 1) return play();
-			playerGameboard.receiveAttack(x, y);
 
-			Game.playerTurn();
+			playerTurn();
+			return playerGameboard.receiveAttack(x, y);
 		};
-		return play();
+		return play(playerTurn);
 	};
 
 	const getRandomCoord = () => Math.floor(Math.random() * 10);

@@ -44,8 +44,8 @@ const Gameboard = (domBoard) =>
 
 	const hitShot = (x, y) =>
 	{
-		getGrid(x, y)[0].hit(getGrid(x, y)[1]);
 		if (domBoard) DOMHandler.hitShot(x, y, domBoard);
+		return getGrid(x, y)[0].hit(getGrid(x, y)[1]);
 	};
 
 	const missShot = (x, y) =>
