@@ -8,18 +8,20 @@ const Player = (board, name) =>
 
 	const gameboard = Gameboard(document.querySelector(`#${board}`));
 
-	const randomPlay = (player, getRandomCoord) =>	
+	const randomPlay = async (player, getRandomCoord) =>	
 	{
+		// eslint-disable-next-line no-unused-vars
+		const temp = await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 500) + 500));
+
 		const playerGameboard = player.gameboard;
-		const play = async () =>
-		{
-			// eslint-disable-next-line no-unused-vars
-			const temp = await new Promise(resolve => setTimeout(resolve, 500));
-			
+		const play = () =>
+		{			
 			const x = getRandomCoord();
 			const y = getRandomCoord();
 
 			if (playerGameboard.getGrid(x, y) === 1) return play();
+
+			console.log(`(${x}, ${y})`);
 
 			const attack = playerGameboard.receiveAttack(x, y);
 			return Promise.resolve(attack);
