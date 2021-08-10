@@ -60,11 +60,16 @@ html, body
 
 .board-element:hover
 {
-	background-color: black !important;
+	background-color: black;
 }
 
 .not-turn
 {
 	pointer-events: none;
 	opacity: 0.5;
+}
+
+.hovered
+{
+	background-color: hsl(0, 100%, 75%) !important;
 }
