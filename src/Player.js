@@ -14,7 +14,7 @@ const Player = (board, name) =>
 	const play = async (player, getRandomCoord) =>	
 	{
 		// eslint-disable-next-line no-unused-vars
-		const temp = await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 500) + 500));
+		// const temp = await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 500) + 500));
 
 		if (targets.length !== 0) return targetMode(player);
 
@@ -25,6 +25,10 @@ const Player = (board, name) =>
 			const y = getRandomCoord();
 
 			if (playerGameboard.getGrid(x, y) === 1) return randomPlay();
+
+			// Checks if parity applies to the random coords
+			if ((y % 2 === 0 && x % 2 === 0) || (y % 2 === 1 && x % 2 === 1)) 
+				return randomPlay();
 
 			const attack = playerGameboard.receiveAttack(x, y);
 			shots.push([x, y]);
