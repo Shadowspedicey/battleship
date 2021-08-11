@@ -20,9 +20,9 @@ const Gameboard = (domBoard) =>
 	const ships = [];
 	const missedShots = [];
 
-	const placeShip = (xCoord, yCoord, length, vertical, visible) =>
+	const placeShip = (xCoord, yCoord, length, vertical, visible, computer) =>
 	{
-		if (!checkRange(xCoord, yCoord, length, vertical)) return "Out of range";
+		if (!checkRange(xCoord, yCoord, length, vertical, computer)) return "Out of range";
 		const ship = Ship(length);
 		ships.push(ship);
 
@@ -48,26 +48,36 @@ const Gameboard = (domBoard) =>
 		return true;
 	};
 
-	const placeShipRandomly = (length, vertical, visibility) => 
+	const placeShipRandomly = (length, vertical, visibility, computer) => 
 	{
 		const foo = () =>
 		{
-			if (placeShip(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), length, vertical, visibility) === "Out of range")
+			if (placeShip(Math.floor(Math.random() * 10), Math.floor(Math.random() * 10), length, vertical, visibility, computer) === "Out of range")
 				foo();
 		};
 		foo();
 	};
 
-	const checkRange = (xCoord, yCoord, length, vertical) =>
+	const checkRange = (xCoord, yCoord, length, vertical, computer) =>
 	{
 		if (!vertical)
 		{
 			// This checks if ships is out of bounds
 			if ((xCoord + length) > 10) return false;
+
 			// This checks for overlapping
 			for (let i = xCoord; i < length + xCoord; i++)
 			{
 				if (getGrid(i, yCoord) !== 0) return false;
+				
+				if (computer)
+				{
+					if (xCoord + length !== 10) if (getGrid(i + 1, yCoord) !== 0) return false;
+					if (xCoord !== 0) if (getGrid(i - 1, yCoord) !== 0) return false;
+
+					if (yCoord !== 9) if (getGrid(i, yCoord + 1) !== 0) return false;
+					if (yCoord !== 0) if (getGrid(i, yCoord - 1) !== 0)	return false;
+				}
 			}
 			return true;
 		} else
@@ -76,6 +86,15 @@ const Gameboard = (domBoard) =>
 			for (let i = yCoord; i < length + yCoord; i++)
 			{
 				if (getGrid(xCoord, i) !== 0) return false;
+
+				if (computer)
+				{
+					if (yCoord + length !== 10) if (getGrid(xCoord, i + 1) !== 0) return false;
+					if (yCoord !== 0) if (getGrid(xCoord, i - 1) !== 0) return false;
+
+					if (xCoord !== 9) if (getGrid(xCoord + 1, i) !== 0) return false;
+					if (xCoord !== 0) if (getGrid(xCoord - 1, i) !== 0)	return false;
+				}
 			}
 			return true;
 		}
