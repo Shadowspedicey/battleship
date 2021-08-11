@@ -65,7 +65,7 @@ describe("Target mode tests", () =>
 		expect(player.gameboard.getGrid(4, 5)).toBe(1);
 	});
 
-	test.only("Target mode adds to target after hit", async () =>
+	test("Target mode adds to target after hit", async () =>
 	{
 		player.gameboard.placeShip(4, 5, 4);
 		await computer.play(player, fakeGetRandomCoord);
