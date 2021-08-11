@@ -174,13 +174,55 @@ const DOMHandler = (() =>
 		if (visible) element.style.backgroundColor = "red";
 	};
 
+	const createBoards = () =>
+	{
+		const boards = document.createElement("div");
+		boards.id = "boards";
+
+		const playerboardContainer = document.createElement("div");
+		playerboardContainer.id = "playerboard-container";
+
+		const playerboard = document.createElement("div");
+		playerboard.id = "playerboard";
+		playerboard.classList.add("board");
+		playerboard.style.pointerEvents = "inherit";
+		playerboardContainer.appendChild(playerboard);
+
+		boards.appendChild(playerboardContainer);
+
+		const computerboard = document.createElement("div");
+		computerboard.id = "computerboard";
+		computerboard.classList.add("board");
+		boards.appendChild(computerboard);
+
+		document.querySelector("#content").appendChild(boards);
+	};
+
+	const menuStartGame = () =>
+	{
+		return new Promise(resolve =>
+		{
+			const menuStartGame = document.querySelector("#menu-start-game");
+			menuStartGame.addEventListener("click", () =>
+			{
+				menuStartGame.parentElement.style.opacity = "0%";
+				setTimeout(() => menuStartGame.parentElement.remove(), 325);
+				setTimeout(() =>
+				{
+					createBoards();
+					resolve();
+				}, 0);
+			});
+		});
+	};
+
 	const missShot = (x, y, domBoard) => 
 		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).style.backgroundColor = "yellow";
 
 	const hitShot = (x, y, domBoard) =>
 		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).classList.add("hit");
 
-	return { createBoard, placeShip, missShot, hitShot };
+	return { createBoard, placeShip, missShot, hitShot, menuStartGame };
 })();
 
 export default DOMHandler;
