@@ -36,7 +36,8 @@ const DOMHandler = (() =>
 						if (i === 0 && j === 0)
 						{
 							const toggle = document.createElement("h1");
-							toggle.textContent = "Vertical";
+							if (!vertical) toggle.textContent = "Vertical";
+							else toggle.textContent = "Horizontal";
 							toggle.id = "toggle";
 							gridElement.parentElement.parentElement.appendChild(toggle);
 							
