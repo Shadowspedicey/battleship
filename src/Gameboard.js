@@ -69,7 +69,7 @@ const Gameboard = (domBoard) =>
 			for (let i = xCoord; i < length + xCoord; i++)
 			{
 				if (getGrid(i, yCoord) !== 0) return false;
-				
+
 				if (computer)
 				{
 					if (xCoord + length !== 10) if (getGrid(i + 1, yCoord) !== 0) return false;
@@ -110,9 +110,9 @@ const Gameboard = (domBoard) =>
 	const hitShot = (x, y) =>
 	{
 		if (domBoard) DOMHandler.hitShot(x, y, domBoard);
-		const _info = getGrid(x, y)[0].hit(getGrid(x, y)[1]);
+		getGrid(x, y)[0].hit(getGrid(x, y)[1]);
 		setGrid(x, y, 1);
-		return _info;
+		return true;
 	};
 
 	const missShot = (x, y) =>

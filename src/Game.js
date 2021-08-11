@@ -26,7 +26,7 @@ const Game = (() =>
 	const computerTurn = () =>
 	{
 		const computer = players.find(player => player.name === "Computer");
-		computer.randomPlay(players.find(player => player.name === "Player"), computer.getRandomCoord)
+		computer.play(players.find(player => player.name === "Player"), computer.getRandomCoord)
 			.then(() => 
 			{
 				switchTurnsDOM();
