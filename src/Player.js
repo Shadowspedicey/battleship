@@ -27,6 +27,7 @@ const Player = (board, name) =>
 			if (playerGameboard.getGrid(x, y) === 1) return randomPlay();
 
 			const attack = playerGameboard.receiveAttack(x, y);
+			shots.push([x, y]);
 			if (attack === true) loadTargets([x, y]);
 			return Promise.resolve(attack);
 		};
@@ -35,8 +36,6 @@ const Player = (board, name) =>
 
 	const loadTargets = coords =>
 	{
-		shots.push(coords);
-
 		if (coords[0] + 1 !== 10)
 			if (searchForDuplicates([coords[0] + 1, coords[1]])) 
 				targets.push([coords[0] + 1, coords[1]]);
@@ -57,6 +56,7 @@ const Player = (board, name) =>
 	const targetMode = player =>
 	{
 		const hit = player.gameboard.receiveAttack(targets[0][0], targets[0][1]);
+		shots.push([targets[0][0], targets[0][1]]);
 
 		if (hit === true) 
 		{
