@@ -7,10 +7,49 @@ html, body
 #content
 {
 	height: 100%;
+	overflow-x: hidden;
 
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
+}
+
+#main-menu
+{
+	width: 100%;
+	height: 100%;
+	background-color: white;
+	overflow: hidden;
+
+	transition: opacity 0.5s ease-in-out;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+
+	position: absolute;
+	z-index: 999;
+}
+
+#main-menu > h1
+{
+	animation: topToBottom 1s ease-in-out 0s 1;
+
+	font-size: 6em;
+	font-family: monospace;
+	user-select: none;
+
+	margin: 0;
+}
+
+#main-menu > h2
+{
+	animation: bottomToTop 1s ease-in-out 0s 1;
+
+	font-size: 3em;
+	font-family: monospace;
+	cursor: pointer;
 }
 
 #boards
@@ -22,7 +61,14 @@ html, body
 
 #playerboard-container
 {
+	animation: leftToRight 1.25s ease-in-out 0s 1;
+
 	position: relative;
+}
+
+#computerboard
+{
+	animation: rightToLeft 1.25s ease-in-out 0s 1;
 }
 
 #playerboard-container > h1
@@ -100,4 +146,36 @@ html, body
 .hovered
 {
 	background-color: hsl(0, 100%, 75%) !important;
+}
+
+@keyframes topToBottom 
+{
+	0%
+	{
+		transform: translateY(-100vh);
+	}
+}
+
+@keyframes rightToLeft
+{
+	0%
+	{
+		transform: translateX(100vw);
+	}
+}
+
+@keyframes bottomToTop
+{
+	0%
+	{
+		transform: translateY(100vh);
+	}
+}
+
+@keyframes leftToRight
+{
+	0%
+	{
+		transform: translateX(-100vw);
+	}
 }
