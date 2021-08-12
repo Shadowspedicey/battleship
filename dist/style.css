@@ -4,6 +4,16 @@ html, body
 	height: 100vh;
 }
 
+.red
+{
+	background-color: red !important;
+}
+
+.yellow
+{
+	background-color: yellow;
+}
+
 #content
 {
 	height: 100%;
@@ -116,6 +126,11 @@ html, body
 	border: 1px solid black;
 }
 
+.board-element:hover
+{
+	background-color: black;
+}
+
 .hit::after
 {
 	width: 100%;
@@ -130,11 +145,6 @@ html, body
 	
 	transform: translateY(-20%);
 	margin: 0;
-}
-
-.board-element:hover
-{
-	background-color: black;
 }
 
 .not-turn
@@ -193,6 +203,7 @@ html, body
 #gameover-container > h3
 {
 	cursor: pointer;
+	transition: transform 250ms;
 
 	color: rgb(200, 0, 0);
 	font-size: 2em;
@@ -202,6 +213,11 @@ html, body
 	animation: bottomToTop 1.25s ease-in-out 0s 1;
 
 	margin: 0.75rem;
+}
+
+#gameover-container > h3:hover
+{
+	transform: scale(1.125);
 }
 
 @keyframes topToBottom 

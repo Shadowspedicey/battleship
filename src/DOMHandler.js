@@ -175,7 +175,7 @@ const DOMHandler = (() =>
 	const placeShip = (x, y, domBoard, visible = false) =>
 	{
 		const element = domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`);
-		if (visible) element.style.backgroundColor = "red";
+		if (visible) element.classList.add("red");
 	};
 
 	const createBoards = () =>
@@ -263,7 +263,7 @@ const DOMHandler = (() =>
 	};
 
 	const missShot = (x, y, domBoard) => 
-		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).style.backgroundColor = "yellow";
+		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).classList.add("yellow");
 
 	const hitShot = (x, y, domBoard) =>
 		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).classList.add("hit");
