@@ -65,6 +65,7 @@ html, body
 #boards
 {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-evenly;
 	align-items: center;
 }
@@ -116,6 +117,7 @@ html, body
 	grid-template-columns: repeat(10, 1fr);
 	grid-template-rows: repeat(10, 1fr);
 
+	margin: 1.5rem;
 	border: 1px solid black;
 }
 
