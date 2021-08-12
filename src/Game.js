@@ -1,9 +1,10 @@
+import DOMHandler from "./DOMHandler";
+
 const Game = (() =>
 {
 	let players = [];
 
 	let _playerTurn = true;
-	let gameOver = false;
 
 	const didPlayersSink = () =>
 	{
@@ -34,25 +35,27 @@ const Game = (() =>
 			});
 	};
 	
-	const playerTurn = (test) => switchTurnsDOM(test);
+	const playerTurn = test => switchTurnsDOM(test);
 	
-	const isGameOver = (alert) =>
+	const isGameOver = () =>
 	{
 		if (didPlayersSink()) 
 		{
-			setTimeout(() => alert("s"), 0);
-			gameOver = true;
+			const lostPlayer = didPlayersSink();
+			document.querySelector("#computerboard").style.pointerEvents = "";
+			DOMHandler.gameOverMenu(lostPlayer.name);
+			return lostPlayer;
 		}
 	};
 
 	const changeTurns = () => _playerTurn = !_playerTurn;
 	
-	const playRound = (test) =>
+	const playRound = test =>
 	{
-		if (gameOver) return;
+		if (isGameOver()) return;
 		_playerTurn ? playerTurn(test) : computerTurn();
 		changeTurns();
-		isGameOver(alert);
+		isGameOver();
 		if (_playerTurn === false) return playRound();
 		return _playerTurn;
 	};

@@ -14,7 +14,7 @@ const Player = (board, name) =>
 	const play = async (player, getRandomCoord) =>	
 	{
 		// eslint-disable-next-line no-unused-vars
-		// const temp = await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 500) + 500));
+		const temp = await new Promise(resolve => setTimeout(resolve, Math.floor(Math.random() * 500) + 500));
 
 		if (targets.length !== 0) return targetMode(player);
 

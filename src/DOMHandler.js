@@ -153,6 +153,10 @@ const DOMHandler = (() =>
 			start.addEventListener("click", () =>
 			{
 				div.remove();
+
+				document.querySelector("#computerboard").classList.remove("not-turn");
+				domBoard.classList.add("not-turn");
+
 				resolve();
 			});
 
@@ -192,7 +196,7 @@ const DOMHandler = (() =>
 
 		const computerboard = document.createElement("div");
 		computerboard.id = "computerboard";
-		computerboard.classList.add("board");
+		computerboard.classList.add("board", "not-turn");
 		boards.appendChild(computerboard);
 
 		document.querySelector("#content").appendChild(boards);
@@ -216,13 +220,55 @@ const DOMHandler = (() =>
 		});
 	};
 
+	const gameOverMenu = playerName =>
+	{
+		const gameoverContainer = document.createElement("div");
+		gameoverContainer.id = "gameover-container";
+		document.querySelector("#content").appendChild(gameoverContainer);
+
+		setTimeout(() => gameoverContainer.style.backgroundColor = "rgba(0, 0, 0, 0.75)", 0);
+
+		const gameoverHeader = document.createElement("h1");
+		gameoverHeader.textContent = "Game Over";
+		gameoverContainer.appendChild(gameoverHeader);
+
+		const lostPlayer = document.createElement("h2");
+		lostPlayer.textContent = `${playerName} has lost`;
+		gameoverContainer.appendChild(lostPlayer);
+
+		const playAgain = document.createElement("h3");
+		playAgain.textContent = "Play Again";
+		gameoverContainer.appendChild(playAgain);
+		playAgain.addEventListener("click", () => playAgainfn(gameoverContainer));
+	};
+
+	const playAgainfn = container =>
+	{
+		Game.gameOver = false;
+
+		container.style.opacity = 0;
+		setTimeout(() => container.remove(), 500);
+
+		Game.players[0].gameboard.reset();
+		Game.players[0].gameboard.domBoard.innerHTML = "";
+		createBoard(Game.players[0].gameboard.domBoard, Game.players[0].gameboard, true);
+		Game.players[0].gameboard.domBoard.style.pointerEvents = "";
+		Game.players[0].gameboard.domBoard.classList.remove("not-turn");
+
+		Game.players[1].gameboard.reset();
+		Game.players[1].gameboard.domBoard.innerHTML = "";
+		createBoard(Game.players[1].gameboard.domBoard, Game.players[1].gameboard);
+		Game.players[1].gameboard.fillComputerBoard();
+		Game.players[1].gameboard.domBoard.classList.add("not-turn");
+	};
+
 	const missShot = (x, y, domBoard) => 
 		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).style.backgroundColor = "yellow";
 
 	const hitShot = (x, y, domBoard) =>
 		domBoard.querySelector(`.board-element[data-coords="(${x}, ${y})"]`).classList.add("hit");
 
-	return { createBoard, placeShip, missShot, hitShot, menuStartGame };
+	return { createBoard, placeShip, missShot, hitShot, menuStartGame, gameOverMenu };
 })();
 
 export default DOMHandler;
