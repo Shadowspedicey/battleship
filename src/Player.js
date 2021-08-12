@@ -44,11 +44,11 @@ const Player = (board, name) =>
 			if (searchForDuplicates([coords[0] + 1, coords[1]])) 
 				targets.push([coords[0] + 1, coords[1]]);
 		
-		if (coords[0] - 1 !== 0)
+		if (coords[0] - 1 !== -1)
 			if (searchForDuplicates([coords[0] - 1, coords[1]]))
 				targets.push([coords[0] - 1, coords[1]]);
 
-		if (coords[1] - 1 !== 0)
+		if (coords[1] - 1 !== -1)
 			if (searchForDuplicates([coords[0], coords[1] - 1]))
 				targets.push([coords[0], coords[1] - 1]);
 		
