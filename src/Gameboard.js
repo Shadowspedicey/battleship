@@ -63,7 +63,7 @@ const Gameboard = (domBoard) =>
 	{
 		for (let i = 0; i < 5; i++)
 		{
-			placeShipRandomly(lengths[i], Math.floor(Math.random() * 2), true, true);
+			placeShipRandomly(lengths[i], Math.floor(Math.random() * 2), false, true);
 		}
 	};
 

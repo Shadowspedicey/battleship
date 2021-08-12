@@ -12,5 +12,3 @@ DOMHandler.menuStartGame()
 		DOMHandler.createBoard(document.querySelector("#computerboard"), computer.gameboard);
 		computer.gameboard.fillComputerBoard();
 	});
-
-//DOMHandler.gameOverMenu(Player(null, "Player").name);
