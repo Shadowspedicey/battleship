@@ -21,7 +21,7 @@ test("Placing ships fails if out of range", () => expect(gameboard.placeShip(6, 
 test("Can damage ship with coords", () =>
 {
 	gameboard.placeShip(0, 0, 2);
-	expect(gameboard.receiveAttack(1, 0)).toBe("Ship has been hit at 1");
+	expect(gameboard.receiveAttack(1, 0)).toBe(true);
 });
 
 test("Knows when it was a miss", () =>
