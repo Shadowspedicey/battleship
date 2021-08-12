@@ -17,6 +17,7 @@ const Gameboard = (domBoard) =>
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 	];
 
+	let lengths = [5, 4, 3, 3, 2];
 	const ships = [];
 	const missedShots = [];
 
@@ -56,6 +57,14 @@ const Gameboard = (domBoard) =>
 				foo();
 		};
 		foo();
+	};
+
+	const fillComputerBoard = () =>
+	{
+		for (let i = 0; i < 5; i++)
+		{
+			placeShipRandomly(lengths[i], Math.floor(Math.random() * 2), true, true);
+		}
 	};
 
 	const checkRange = (xCoord, yCoord, length, vertical, computer) =>
@@ -147,7 +156,7 @@ const Gameboard = (domBoard) =>
 	const getGrid = (x, y) => board[y][x];
 	const setGrid = (x, y, value) => board[y][x] = value;
 
-	return { placeShip, placeShipRandomly, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard, reset };
+	return { placeShip, board, getGrid, receiveAttack, missedShots, didShipsSink, domBoard, reset, fillComputerBoard };
 };
 
 export default Gameboard;
