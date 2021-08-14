@@ -84,9 +84,15 @@ const Player = (board, name) =>
 		return true;
 	};
 
+	const reset = () =>
+	{
+		shots.length = 0;
+		targets.length = 0;
+	};
+
 	const getRandomCoord = () => Math.floor(Math.random() * 10);
 
-	obj = { gameboard, play, getRandomCoord, name, targets };
+	obj = { gameboard, play, getRandomCoord, name, targets, reset };
 
 	Game.players.push(obj);
 	

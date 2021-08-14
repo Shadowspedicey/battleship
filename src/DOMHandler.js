@@ -256,6 +256,7 @@ const DOMHandler = (() =>
 		Game.players[0].gameboard.domBoard.classList.remove("not-turn");
 
 		Game.players[1].gameboard.reset();
+		Game.players[1].reset();
 		Game.players[1].gameboard.domBoard.innerHTML = "";
 		createBoard(Game.players[1].gameboard.domBoard, Game.players[1].gameboard);
 		Game.players[1].gameboard.fillComputerBoard();
